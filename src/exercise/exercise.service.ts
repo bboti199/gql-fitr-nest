@@ -18,7 +18,7 @@ export class ExerciseService {
    */
   async getAll(user: User, includePublic = false): Promise<Exercise[]> {
     const whereCondition = includePublic
-      ? [{ user, is_public: true }]
+      ? [{ user }, { is_public: true }]
       : { user };
 
     return await this.exerciseRepository.find({

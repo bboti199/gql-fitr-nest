@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Routine } from './routine.entity';
 import { Exercise } from 'src/exercise/db/exercise.entity';
@@ -28,11 +21,15 @@ export class RoutineTemplate {
   @ManyToOne(
     () => Routine,
     routine => routine.template,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   routine: Routine;
 
-  @OneToOne(() => Exercise)
-  @JoinColumn()
+  @ManyToOne(
+    () => Exercise,
+    exercise => exercise.templates,
+    { cascade: true },
+  )
   @Field(() => Exercise)
   exercise: Exercise;
 }

@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from 'src/user/db/user.entity';
@@ -34,7 +35,7 @@ export class Routine {
   @OneToMany(
     () => RoutineTemplate,
     template => template.routine,
-    { onDelete: 'CASCADE' },
+    { cascade: true, eager: true },
   )
   @Field(() => [RoutineTemplate])
   template: RoutineTemplate[];

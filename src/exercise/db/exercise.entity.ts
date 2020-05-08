@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ObjectType, Field, ID, registerEnumType } from '@nestjs/graphql';
 import { User } from '../../user/db/user.entity';
+import { RoutineTemplate } from 'src/routine/db/routineTemplate.entity';
 
 export enum ExerciseType {
   COMPOUND = 'COMPOUND',
@@ -45,4 +46,11 @@ export class Exercise {
     { nullable: true, onDelete: 'CASCADE' },
   )
   user: User;
+
+  @ManyToOne(
+    () => RoutineTemplate,
+    template => template.exercise,
+    { nullable: true, onDelete: 'CASCADE' },
+  )
+  templates: RoutineTemplate[];
 }
