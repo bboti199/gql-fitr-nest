@@ -14,6 +14,7 @@ import { GetUser } from 'src/user/user.decorator';
 import { User } from 'src/user/db/user.entity';
 import { RoutineTemplate } from './db/routineTemplate.entity';
 import { CreateRoutineInput } from './inputs/createRoutine.input';
+import { UpdateRoutineInput } from './inputs/updateRoutine.input';
 
 @Resolver(() => Routine)
 export class RoutineResolver {
@@ -47,5 +48,15 @@ export class RoutineResolver {
     @GetUser() user,
   ): Promise<number> {
     return this.routineService.delete(id, user);
+  }
+
+  @Mutation(() => Routine, { nullable: true })
+  @UseGuards(FirebaseAuthGuard)
+  async updateOneRoutine(
+    @Args('id') id: string,
+    @GetUser() user: User,
+    @Args('data') data: UpdateRoutineInput,
+  ): Promise<Routine | null> {
+    return this.routineService.updateOne(id, data, user);
   }
 }

@@ -60,8 +60,6 @@ export class ExerciseService {
       where: { id, user },
     });
 
-    console.log(data);
-
     if (exercise) {
       return await this.exerciseRepository.save({ ...exercise, ...data });
     }
